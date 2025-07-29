@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger.yaml')
 const dbConnection = require('./database/connection')
+const path = require("path");
 
 dotEnv.config()
 
@@ -29,9 +30,14 @@ if (process.env.NODE_ENV !== 'production') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 }
 
-app.get('/', (req, res, next) => {
-  res.send('Hello from my Express server v2!')
-})
+//Sert les fichiers statiques (css, images, etc.)
+app.use(express.static(path.join(__dirname, '../../ArgentBank-Frontend-main')));
+
+// Route /
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../ArgentBank-Frontend-main/index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
