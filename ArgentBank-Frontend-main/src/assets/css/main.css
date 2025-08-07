@@ -15,10 +15,12 @@ body {
 
 .main {
   flex: 1;
+  padding: 1rem 0;
 }
 
 .bg-dark {
   background-color: #12002b;
+   min-height: calc(100vh - 60px);
 }
 
 .sr-only {
@@ -163,6 +165,8 @@ body {
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
+  text-decoration: underline;
+  border: none;
 }
 
 .sign-in-content {
@@ -175,7 +179,7 @@ body {
 }
 
 .sign-in-icon {
-  font-size: 5rem;
+  font-size: 1rem;
 }
 
 .input-remember {
