@@ -1,16 +1,11 @@
-import Layout from '../components/Layout';
+// src/pages/SignIn.jsx
 import SignInForm from '../components/SignInForm';
 
-
 function SignIn() {
-
-  return(
-    <>
-     <Layout>
+  return (
+    <div className="bg-dark">
       <SignInForm />
-    </Layout>
-    </>
-    
+    </div>
   );
 }
 

@@ -15,12 +15,13 @@ body {
 
 .main {
   flex: 1;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
 }
 
 .bg-dark {
   background-color: #12002b;
-   min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  padding-top: 5rem; /* décale vers le bas */
 }
 
 .sr-only {
@@ -174,7 +175,7 @@ body {
   background-color: white;
   width: 300px;
   margin: 0 auto;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   padding: 2rem;
 }
 

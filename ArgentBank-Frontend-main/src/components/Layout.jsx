@@ -1,11 +1,15 @@
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
     <>
       <Navbar />
-      <main className="main bg-dark">{children}</main>
+      <main className="main">
+        <Outlet />
+      </main>
       <Footer />
     </>
   );
