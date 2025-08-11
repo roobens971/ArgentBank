@@ -11,13 +11,13 @@ export default function Profile() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        navigate("/sign-in");
+        navigate("/login");
         return;
       }
 
       try {
         const res = await fetch("http://localhost:3001/api/v1/user/profile", {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

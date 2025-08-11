@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 
-export default function Navbar({ isLoggedIn = false, username = '' }) {
+export default function Navbar({ isLoggedIn = false, username = 'Tony' }) {
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
@@ -14,7 +14,7 @@ export default function Navbar({ isLoggedIn = false, username = '' }) {
             <Link className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i> {username}
             </Link>
-            <Link className="main-nav-item" to="/logout">
+            <Link className="main-nav-item" to="/">
               <i className="fa fa-sign-out"></i> Sign Out
             </Link>
           </>
