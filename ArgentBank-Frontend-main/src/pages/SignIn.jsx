@@ -1,10 +1,10 @@
 // src/pages/SignIn.jsx
 import SignInForm from '../components/SignInForm';
 
-function SignIn() {
+function SignIn({ setIsLoggedIn }) {
   return (
     <div className="bg-dark">
-      <SignInForm />
+      <SignInForm setIsLoggedIn={setIsLoggedIn} />
     </div>
   );
 }

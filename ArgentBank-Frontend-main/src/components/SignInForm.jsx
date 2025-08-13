@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SignInForm() {
+function SignInForm({ setIsLoggedIn }) {  // <-- on reçoit la fonction ici
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -9,11 +9,9 @@ function SignInForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", { username, password, rememberMe });
-    // redirection ou appel API ici
 
     try {
-        const res = await fetch("http://localhost:3001/api/v1/user/login", {
+      const res = await fetch("http://localhost:3001/api/v1/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: username, password }),
@@ -25,15 +23,15 @@ function SignInForm() {
         alert(data.message || "Erreur de connexion");
         return;
       }
+
       localStorage.setItem("token", data.body.token);
-      console.log("Redirection vers /profile");
+      setIsLoggedIn(true);       // <-- On met à jour l’état ici !
       navigate("/profile");
     } catch (err) {
       alert("Erreur lors de la connexion");
-      console.log(err);
+      console.error(err);
     }
   };
-
 
   return (
     <section className="sign-in-content">
