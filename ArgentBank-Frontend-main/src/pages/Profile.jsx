@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile, logout } from "../userSlice";
 
 export default function Profile() {
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = useSelector((state) => state.user.token);
+  const profile = useSelector((state) => state.user.profile);
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = localStorage.getItem("token");
+      const storedToken = token || localStorage.getItem("token");
 
-      if (!token) {
+      if (!storedToken) {
         navigate("/login");
         return;
       }
@@ -20,7 +23,7 @@ export default function Profile() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${storedToken}`,
           },
         });
 
@@ -30,23 +33,23 @@ export default function Profile() {
           throw new Error(data.message || "Erreur lors de la récupération");
         }
 
-        setUserData(data.body);
+        dispatch(setProfile(data.body));
       } catch (err) {
         console.error("Erreur profil :", err);
-        setError(err.message);
+        dispatch(logout());
+        navigate("/login");
       }
     };
 
     fetchProfile();
-  }, [navigate]);
+  }, [token, dispatch, navigate]);
 
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!userData) return <p>Chargement...</p>;
+  if (!profile) return <p>Chargement...</p>;
 
   return (
     <div className="profile">
       <h1>
-        Bienvenue, {userData.firstName} {userData.lastName} !
+        Bienvenue, {profile.firstName} {profile.lastName} !
       </h1>
     </div>
   );

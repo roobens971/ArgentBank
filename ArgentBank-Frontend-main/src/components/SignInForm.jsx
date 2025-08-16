@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToken, setProfile } from "../userSlice";
 
-function SignInForm({ setIsLoggedIn }) {  // <-- on reçoit la fonction ici
+function SignInForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,8 +27,25 @@ function SignInForm({ setIsLoggedIn }) {  // <-- on reçoit la fonction ici
         return;
       }
 
-      localStorage.setItem("token", data.body.token);
-      setIsLoggedIn(true);       // <-- On met à jour l’état ici !
+      // Stocker le token dans Redux
+      dispatch(setToken(data.body.token));
+
+      // Récupérer le profil après connexion
+      const profileRes = await fetch("http://localhost:3001/api/v1/user/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.body.token}`,
+        },
+      });
+
+    const profileData = await profileRes.json();
+    dispatch(setProfile(profileData.body));
+
+    // On enregistre toujours le token
+    localStorage.setItem("token", data.body.token);
+
+
       navigate("/profile");
     } catch (err) {
       alert("Erreur lors de la connexion");

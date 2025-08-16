@@ -1,25 +1,25 @@
 // App.jsx
-import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./components/Layout";
 import UserHomePage from "./components/UserHomePage";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setIsLoggedIn(true);
-  }, []);
+  // On récupère le token depuis Redux
+  const token = useSelector((state) => state.user.token);
+  const isLoggedIn = !!token; // true si token existe
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}>
+        <Route
+          path="/"
+          element={<Layout isLoggedIn={isLoggedIn} />}
+        >
           <Route index element={<Home />} />
-          <Route path="/login" element={<SignIn setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<SignIn />} />
           <Route path="/profile" element={<UserHomePage />} />
         </Route>
       </Routes>
@@ -28,3 +28,4 @@ function App() {
 }
 
 export default App;
+

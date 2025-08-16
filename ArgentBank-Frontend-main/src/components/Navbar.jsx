@@ -1,15 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from '../assets/img/argentBankLogo.png';
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../userSlice";
+import logo from "../assets/img/argentBankLogo.png";
 
-export default function Navbar({ isLoggedIn = false, username = 'Tony', setIsLoggedIn }) {
+export default function Navbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.user.profile);
+  const token = useSelector((state) => state.user.token);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");   // supprime le token
-    setIsLoggedIn(false);                // met à jour l’état connexion
-    navigate("/");                      // redirige vers la home
+    dispatch(logout());
+    localStorage.removeItem("token");
+    navigate("/");
   };
+
+  const isLoggedIn = !!token && !!profile;
 
   return (
     <nav className="main-nav">
@@ -21,7 +28,7 @@ export default function Navbar({ isLoggedIn = false, username = 'Tony', setIsLog
         {isLoggedIn ? (
           <>
             <Link className="main-nav-item" to="/profile">
-              <i className="fa fa-user-circle"></i> {username}
+              <i className="fa fa-user-circle"></i> {profile?.firstName || "User"}
             </Link>
             <button
               className="main-nav-item"
