@@ -281,6 +281,33 @@ body {
   color: #fff;
 }
 
+.container-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.inputSpace {
+  margin-left: 7px;
+  height: 20px;
+  width: 10%;
+}
+
+.save-btn, .cancel-btn {
+  padding: 8px;
+  width: 110px;
+  background-color: #00bc77;
+  border: none;
+  color: #fff;
+  border-radius: 3%;
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;
